@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stick Figure Game</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body { margin: 0; background: #222; }
+    canvas { display: block; margin: 0 auto; }
+  </style>
+</head>
+<body>
+  <div id="start-menu">
+    <h1>move 'n shoot</h1>
+    <div class="menu-container">
+      <div class="controls">
+        <div>
+          <h2 style="color:#ff4444;">Player 1</h2>
+          <ul>
+            <li>Move: W A S D</li>
+            <li>Jump: W</li>
+            <li>Slide: Shift</li>
+            <li>Secret Boost: Q + W</li>
+            <li>Shoot: E</li>
+          </ul>
+        </div>
+        <div>
+          <h2 style="color:#4444ff;">Player 2</h2>
+          <ul>
+            <li>Move: Arrow Keys</li>
+            <li>Jump: Up Arrow</li>
+            <li>Slide: Right Shift</li>
+            <li>Secret Boost: / + Up Arrow</li>
+            <li>Shoot: Mouse</li>
+          </ul>
+        </div>
+      </div>
+      <button id="start-btn">Start Game</button>
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/phaser@3.60.0/dist/phaser.js"></script>
+  <script src="game.js"></script>
+</body>
+</html> 
