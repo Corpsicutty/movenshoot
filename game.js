@@ -961,10 +961,10 @@ function update(time, delta) {
                 let bullet = bullets.create(tipX, tipY, null);
                 bullet.body.setSize(16, 8);
                 bullet.setDisplaySize(16, 8);
-                bullet.setVelocityX(Math.cos(angle) * 1200);
-                bullet.setVelocityY(Math.sin(angle) * 1200);
+                bullet.setVelocityX(Math.cos(angle) * 1800); // was 1200
+                bullet.setVelocityY(Math.sin(angle) * 1800); // was 1200
                 bullet.setTint(0xff0000);
-                bullet.lifespan = 1000;
+                bullet.lifespan = 1800; // was 1000
                 bullet.body.allowGravity = false;
                 bullet.ricochetCount = 0;
                 bullet.body.bounce.x = 1;
@@ -986,10 +986,10 @@ function update(time, delta) {
                     let bullet = bullets.create(tipX, tipY, null);
                     bullet.body.setSize(16, 8);
                     bullet.setDisplaySize(16, 8);
-                    bullet.setVelocityX(Math.cos(pelletAngle) * 1200);
-                    bullet.setVelocityY(Math.sin(pelletAngle) * 1200);
+                    bullet.setVelocityX(Math.cos(pelletAngle) * 1800); // was 1200
+                    bullet.setVelocityY(Math.sin(pelletAngle) * 1800); // was 1200
                     bullet.setTint(0xff0000);
-                    bullet.lifespan = 1000;
+                    bullet.lifespan = 1800; // was 1000
                     bullet.body.allowGravity = false;
                     bullet.ricochetCount = 0;
                     bullet.body.bounce.x = 1;
@@ -1008,10 +1008,10 @@ function update(time, delta) {
                 let bullet = bullets.create(tipX, tipY, null);
                 bullet.body.setSize(16, 8);
                 bullet.setDisplaySize(16, 8);
-                bullet.setVelocityX(Math.cos(angle) * 1200);
-                bullet.setVelocityY(Math.sin(angle) * 1200);
+                bullet.setVelocityX(Math.cos(angle) * 1800); // was 1200
+                bullet.setVelocityY(Math.sin(angle) * 1800); // was 1200
                 bullet.setTint(0xff0000);
-                bullet.lifespan = 1000;
+                bullet.lifespan = 1800; // was 1000
                 bullet.body.allowGravity = false;
                 bullet.ricochetCount = 0;
                 bullet.body.bounce.x = 1;
@@ -1193,10 +1193,10 @@ function update(time, delta) {
                 let bullet = bullets.create(tipX, tipY, null);
                 bullet.body.setSize(16, 8);
                 bullet.setDisplaySize(16, 8);
-                bullet.setVelocityX(Math.cos(angle) * 1200);
-                bullet.setVelocityY(Math.sin(angle) * 1200);
+                bullet.setVelocityX(Math.cos(angle) * 1800); // was 1200
+                bullet.setVelocityY(Math.sin(angle) * 1800); // was 1200
                 bullet.setTint(0xff0000);
-                bullet.lifespan = 1000;
+                bullet.lifespan = 1800; // was 1000
                 bullet.body.allowGravity = false;
                 bullet.ricochetCount = 0;
                 bullet.body.bounce.x = 1;
@@ -1379,10 +1379,10 @@ function update(time, delta) {
                     let bullet = bullets.create(tipX, tipY, null);
                     bullet.body.setSize(16, 8);
                     bullet.setDisplaySize(16, 8);
-                    bullet.setVelocityX(Math.cos(angle) * 1200);
-                    bullet.setVelocityY(Math.sin(angle) * 1200);
+                    bullet.setVelocityX(Math.cos(angle) * 1800); // was 1200
+                    bullet.setVelocityY(Math.sin(angle) * 1800); // was 1200
                     bullet.setTint(0xff0000);
-                    bullet.lifespan = 1000;
+                    bullet.lifespan = 1800; // was 1000
                     bullet.body.allowGravity = false;
                     bullet.ricochetCount = 0;
                     bullet.body.bounce.x = 1;
@@ -1404,10 +1404,10 @@ function update(time, delta) {
                         let bullet = bullets.create(tipX, tipY, null);
                         bullet.body.setSize(16, 8);
                         bullet.setDisplaySize(16, 8);
-                        bullet.setVelocityX(Math.cos(pelletAngle) * 1200);
-                        bullet.setVelocityY(Math.sin(pelletAngle) * 1200);
+                        bullet.setVelocityX(Math.cos(pelletAngle) * 1800); // was 1200
+                        bullet.setVelocityY(Math.sin(pelletAngle) * 1800); // was 1200
                         bullet.setTint(0xff0000);
-                        bullet.lifespan = 1000;
+                        bullet.lifespan = 1800; // was 1000
                         bullet.body.allowGravity = false;
                         bullet.ricochetCount = 0;
                         bullet.body.bounce.x = 1;
@@ -1426,10 +1426,10 @@ function update(time, delta) {
                     let bullet = bullets.create(tipX, tipY, null);
                     bullet.body.setSize(16, 8);
                     bullet.setDisplaySize(16, 8);
-                    bullet.setVelocityX(Math.cos(angle) * 1200);
-                    bullet.setVelocityY(Math.sin(angle) * 1200);
+                    bullet.setVelocityX(Math.cos(angle) * 1800); // was 1200
+                    bullet.setVelocityY(Math.sin(angle) * 1800); // was 1200
                     bullet.setTint(0xff0000);
-                    bullet.lifespan = 1000;
+                    bullet.lifespan = 1800; // was 1000
                     bullet.body.allowGravity = false;
                     bullet.ricochetCount = 0;
                     bullet.body.bounce.x = 1;
