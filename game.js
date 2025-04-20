@@ -128,6 +128,11 @@ let aiStateTimer = 0;
 let aiPatrolDir = 1;
 let aiPrevState = 'idle';
 
+// --- DEV MODE PERSISTENCE ---
+if (localStorage.getItem('devSuperP1') === 'true') {
+    window.devSuperP1 = true;
+}
+
 const game = new Phaser.Game(config);
 
 function preload() {}
@@ -614,6 +619,7 @@ function create() {
                     startSecretLevel(this);
                 } else if (code === '11300803' && (gameMode === 'pve' || gameMode === 'pvp')) {
                     window.devSuperP1 = true;
+                    localStorage.setItem('devSuperP1', 'true');
                     // Show dev mode message
                     let devMsg = document.createElement('div');
                     devMsg.innerText = 'DEV MODE: Player 1 is supercharged!';
@@ -1632,19 +1638,6 @@ function update(time, delta) {
             player1.setTexture('stickIdleP1');
         }
         return;
-    }
-
-    // In update(), override Player 1's movement constants if window.devSuperP1 is true:
-    if (window.devSuperP1) {
-        var DEV_PLAYER_SPEED = 12000;
-        var DEV_JUMP_VELOCITY = -18000;
-        var DEV_PLAYER_ACCEL = 6000;
-        var DEV_PLAYER_MAX_SPEED = 40000;
-        var DEV_PLAYER_SUPER_MAX_SPEED = 80000;
-        var DEV_BHOP_BOOST = 20000;
-        var DEV_MOMENTUM_BOOST = 10000;
-        var DEV_WALL_JUMP_X = 40000;
-        var DEV_WALL_JUMP_Y = -18000;
     }
 }
 
