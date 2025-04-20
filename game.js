@@ -20,26 +20,26 @@ const config = {
 let player1, player2, cursors, keyW, keyA, keyS, keyD;
 let ground, walls, pillars, platforms;
 
-const PLAYER_SPEED = 220;
-const JUMP_VELOCITY = -420;
-const WALL_JUMP_X = 1200; // Super strong horizontal boost
-const WALL_JUMP_Y = -650; // Moderate vertical boost
+const PLAYER_SPEED = 340; // was 220
+const JUMP_VELOCITY = -620; // was -420
+const WALL_JUMP_X = 1800; // was 1200
+const WALL_JUMP_Y = -950; // was -650
 
-const PLAYER_ACCEL = 60; // Faster acceleration
-const PLAYER_FRICTION = 40; // Faster friction
-const PLAYER_MAX_SPEED = 600; // Much faster normal max speed
-const PLAYER_SUPER_MAX_SPEED = 1200; // Much faster after wall jump burst
+const PLAYER_ACCEL = 90; // was 60
+const PLAYER_FRICTION = 60; // was 40
+const PLAYER_MAX_SPEED = 900; // was 600
+const PLAYER_SUPER_MAX_SPEED = 1800; // was 1200
 
 const BHOP_WINDOW = 180; // Easier timing window
-const BHOP_BOOST = 350; // Much more speed per perfect hop
+const BHOP_BOOST = 600; // was 350
 
-const SLIDE_SPEED = 900;
+const SLIDE_SPEED = 1200; // was 900
 const SLIDE_DURATION = 400; // ms
 
-const SECRET_BOOST_X = 2000; // Super speed boost (added to current velocity)
-const SECRET_BOOST_Y = -1200; // Huge vertical boost
+const SECRET_BOOST_X = 3000; // was 2000
+const SECRET_BOOST_Y = -1800; // was -1200
 
-const MOMENTUM_BOOST = 120; // Extra max speed per bhop streak
+const MOMENTUM_BOOST = 200; // was 120
 
 const DASH_VELOCITY = 900;
 const DASH_WINDOW = 250; // ms
@@ -1037,6 +1037,9 @@ function update(time, delta) {
             p1LastRightTap = time;
         }
     }
+    // --- Decrement dash cooldowns ---
+    if (p1DashCooldown > 0) p1DashCooldown -= delta;
+    if (p2DashCooldown > 0) p2DashCooldown -= delta;
 
     // --- PLAYER 2 (AI for PvE) ---
     if (gameMode === 'pve') {
