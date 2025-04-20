@@ -774,23 +774,27 @@ function update(time, delta) {
     if (gameState !== 'play') return;
     if (respawnCooldown > 0) respawnCooldown -= delta;
 
-    // --- Ensure gun sprites exist for both players if they have a gun ---
-    if (p1HasGun && !p1GunSprite) {
-        let p1SpriteKey = (p1GunType === 'sniper') ? 'gun0' : (p1GunType === 'smg' ? 'smg' : 'shotgun');
-        p1GunSprite = game.scene.scenes[0].add.sprite(player1.x, player1.y, p1SpriteKey);
-        p1GunSprite.setOrigin(0.2, 0.7);
-        p1GunSprite.setDepth(10);
+    // --- DEV SUPER POWERS OVERRIDE FOR PLAYER 1 ---
+    let p1_SPEED = PLAYER_SPEED;
+    let p1_JUMP_VELOCITY = JUMP_VELOCITY;
+    let p1_ACCEL = PLAYER_ACCEL;
+    let p1_MAX_SPEED = PLAYER_MAX_SPEED;
+    let p1_SUPER_MAX_SPEED = PLAYER_SUPER_MAX_SPEED;
+    let p1_BHOP_BOOST = BHOP_BOOST;
+    let p1_MOMENTUM_BOOST = MOMENTUM_BOOST;
+    let p1_WALL_JUMP_X = WALL_JUMP_X;
+    let p1_WALL_JUMP_Y = WALL_JUMP_Y;
+    if (window.devSuperP1) {
+        p1_SPEED = 12000;
+        p1_JUMP_VELOCITY = -18000;
+        p1_ACCEL = 6000;
+        p1_MAX_SPEED = 40000;
+        p1_SUPER_MAX_SPEED = 80000;
+        p1_BHOP_BOOST = 20000;
+        p1_MOMENTUM_BOOST = 10000;
+        p1_WALL_JUMP_X = 40000;
+        p1_WALL_JUMP_Y = -18000;
     }
-    if (p2HasGun && !p2GunSprite) {
-        let p2SpriteKey = (p2GunType === 'sniper') ? 'gun1' : (p2GunType === 'smg' ? 'smg' : 'shotgun');
-        p2GunSprite = game.scene.scenes[0].add.sprite(player2.x, player2.y, p2SpriteKey);
-        p2GunSprite.setOrigin(0.2, 0.7);
-        p2GunSprite.setDepth(10);
-    }
-
-    // --- Dash cooldown decrement ---
-    p1DashCooldown = Math.max(0, p1DashCooldown - delta);
-    p2DashCooldown = Math.max(0, p2DashCooldown - delta);
 
     // --- PLAYER 1 (WASD) ---
     let p1OnGround = player1.body.touching.down;
@@ -814,11 +818,11 @@ function update(time, delta) {
         player1.bhopping = false;
         p1BhopStreak = 0;
         if (p1TouchingLeft || (!p1TouchingRight && player1.body.velocity.x <= 0)) {
-            player1.setVelocityY(WALL_JUMP_Y);
-            player1.setVelocityX(WALL_JUMP_X);
+            player1.setVelocityY(p1_WALL_JUMP_Y);
+            player1.setVelocityX(p1_WALL_JUMP_X);
         } else if (p1TouchingRight || (!p1TouchingLeft && player1.body.velocity.x > 0)) {
-            player1.setVelocityY(WALL_JUMP_Y);
-            player1.setVelocityX(-WALL_JUMP_X);
+            player1.setVelocityY(p1_WALL_JUMP_Y);
+            player1.setVelocityX(-p1_WALL_JUMP_X);
         }
         p1WallJumped = true;
     } else if (p1OnGround && Phaser.Input.Keyboard.JustDown(keyW)) {
@@ -837,16 +841,16 @@ function update(time, delta) {
             if (!p1JumpQueued && (time - p1LastLandTime <= BHOP_WINDOW)) {
                 p1BhopStreak = (p1BhopStreak || 0) + 1;
                 let dir = Math.sign(p1vx) || p1LastDir;
-                let boost = dir * BHOP_BOOST * p1BhopStreak;
+                let boost = dir * p1_BHOP_BOOST * p1BhopStreak;
                 let newVx = p1vx + boost;
                 player1.setVelocityX(newVx);
                 player1.bhopping = true;
-                player1.setVelocityY(JUMP_VELOCITY - 40 * p1BhopStreak);
+                player1.setVelocityY(p1_JUMP_VELOCITY - 40 * p1BhopStreak);
             } else if (!p1JumpQueued) {
                 player1.bhopping = false;
                 p1BhopStreak = 0;
             }
-            player1.setVelocityY(JUMP_VELOCITY);
+            player1.setVelocityY(p1_JUMP_VELOCITY);
         }
     }
     if (!p1OnGround && !p1OnWall) player1.bhopping = false;
@@ -862,11 +866,11 @@ function update(time, delta) {
         if (p1JumpQueued && (time - p1JumpQueued <= BHOP_WINDOW)) {
             p1BhopStreak = (p1BhopStreak || 0) + 1;
             let dir = Math.sign(p1vx) || p1LastDir;
-            let boost = dir * BHOP_BOOST * p1BhopStreak;
+            let boost = dir * p1_BHOP_BOOST * p1BhopStreak;
             let newVx = p1vx + boost;
             player1.setVelocityX(newVx);
             player1.bhopping = true;
-            player1.setVelocityY(JUMP_VELOCITY - 40 * p1BhopStreak);
+            player1.setVelocityY(p1_JUMP_VELOCITY - 40 * p1BhopStreak);
             p1JumpQueued = false;
         } else {
             p1BhopStreak = 0;
@@ -875,16 +879,45 @@ function update(time, delta) {
     if (p1OnGround) p1JumpQueued = false;
     player1.wasOnGround = p1OnGround;
 
-    // --- DEV MODE OVERRIDES FOR PLAYER 1 ---
-    let p1Speed = window.devSuperP1 ? 12000 : PLAYER_SPEED;
-    let p1Jump = window.devSuperP1 ? -18000 : JUMP_VELOCITY;
-    let p1Accel = window.devSuperP1 ? 6000 : PLAYER_ACCEL;
-    let p1Max = window.devSuperP1 ? 40000 : PLAYER_MAX_SPEED;
-    let p1SuperMax = window.devSuperP1 ? 80000 : PLAYER_SUPER_MAX_SPEED;
-    let p1Bhop = window.devSuperP1 ? 20000 : BHOP_BOOST;
-    let p1Momentum = window.devSuperP1 ? 10000 : MOMENTUM_BOOST;
-    let p1WallX = window.devSuperP1 ? 40000 : WALL_JUMP_X;
-    let p1WallY = window.devSuperP1 ? -18000 : WALL_JUMP_Y;
+    // Momentum-based max speed
+    let p1MaxSpeed = p1_MAX_SPEED + p1_MOMENTUM_BOOST * (p1BhopStreak || 0);
+    if (player1.bhopping) p1MaxSpeed = p1_SUPER_MAX_SPEED + p1_MOMENTUM_BOOST * (p1BhopStreak || 0);
+    if (!p1WallJumped) {
+        if (keyA.isDown) {
+            p1LastDir = -1;
+            player1.setVelocityX(Math.max(p1vx - p1_ACCEL, -p1MaxSpeed));
+            player1.flipX = true;
+        } else if (keyD.isDown) {
+            p1LastDir = 1;
+            player1.setVelocityX(Math.min(p1vx + p1_ACCEL, p1MaxSpeed));
+            player1.flipX = false;
+        } else if (!player1.bhopping) {
+            // Friction (unless bhopping)
+            if (p1vx > 0) {
+                player1.setVelocityX(Math.max(p1vx - PLAYER_FRICTION, 0));
+            } else if (p1vx < 0) {
+                player1.setVelocityX(Math.min(p1vx + PLAYER_FRICTION, 0));
+            }
+        }
+    }
+    p1WallJumped = false;
+
+    // --- PLAYER 1 SLIDE ---
+    if (p1OnGround && keyShiftL.isDown && Math.abs(p1vx) > 50 && !p1Sliding) {
+        p1Sliding = true;
+        p1SlideTimer = 0;
+        player1.setSize(24, 36); // Lower hitbox
+        player1.setDisplaySize(40, 36);
+        player1.setVelocityX((p1vx > 0 ? 1 : -1) * SLIDE_SPEED);
+    }
+    if (p1Sliding) {
+        p1SlideTimer += delta;
+        if (p1SlideTimer > SLIDE_DURATION || !keyShiftL.isDown || !p1OnGround) {
+            p1Sliding = false;
+            player1.setSize(24, 60);
+            player1.setDisplaySize(40, 60);
+        }
+    }
 
     // --- PLAYER 1 ANIMATION ---
     if (p1Sliding) {
@@ -1544,6 +1577,29 @@ function update(time, delta) {
         }
         if (p1OnGround) p1JumpQueued = false;
         player1.wasOnGround = p1OnGround;
+
+        // Momentum-based max speed
+        let p1MaxSpeed = PLAYER_MAX_SPEED + MOMENTUM_BOOST * (p1BhopStreak || 0);
+        if (player1.bhopping) p1MaxSpeed = PLAYER_SUPER_MAX_SPEED + MOMENTUM_BOOST * (p1BhopStreak || 0);
+        if (!p1WallJumped) {
+            if (keyA.isDown) {
+                p1LastDir = -1;
+                player1.setVelocityX(Math.max(p1vx - PLAYER_ACCEL, -p1MaxSpeed));
+                player1.flipX = true;
+            } else if (keyD.isDown) {
+                p1LastDir = 1;
+                player1.setVelocityX(Math.min(p1vx + PLAYER_ACCEL, p1MaxSpeed));
+                player1.flipX = false;
+            } else if (!player1.bhopping) {
+                // Friction (unless bhopping)
+                if (p1vx > 0) {
+                    player1.setVelocityX(Math.max(p1vx - PLAYER_FRICTION, 0));
+                } else if (p1vx < 0) {
+                    player1.setVelocityX(Math.min(p1vx + PLAYER_FRICTION, 0));
+                }
+            }
+        }
+        p1WallJumped = false;
 
         // --- SLIDE ---
         // Simple WASD movement for player1
