@@ -612,6 +612,25 @@ function create() {
                     document.getElementById('start-menu').style.display = 'none';
                     gameState = 'secret';
                     startSecretLevel(this);
+                } else if (code === 'dev11300803' && (gameMode === 'pve' || gameMode === 'pvp')) {
+                    window.devSuperP1 = true;
+                    // Show dev mode message
+                    let devMsg = document.createElement('div');
+                    devMsg.innerText = 'DEV MODE: Player 1 is supercharged!';
+                    devMsg.style.position = 'absolute';
+                    devMsg.style.top = '20%';
+                    devMsg.style.left = '50%';
+                    devMsg.style.transform = 'translate(-50%, -50%)';
+                    devMsg.style.fontSize = '3em';
+                    devMsg.style.color = '#fff';
+                    devMsg.style.background = 'rgba(255,0,0,0.8)';
+                    devMsg.style.padding = '0.5em 2em';
+                    devMsg.style.borderRadius = '24px';
+                    devMsg.style.zIndex = 2000;
+                    devMsg.style.textAlign = 'center';
+                    devMsg.style.fontFamily = 'monospace';
+                    document.body.appendChild(devMsg);
+                    setTimeout(() => { devMsg.remove(); }, 2000);
                 }
             }
         });
@@ -1607,6 +1626,19 @@ function update(time, delta) {
             player1.setTexture('stickIdleP1');
         }
         return;
+    }
+
+    // In update(), override Player 1's movement constants if window.devSuperP1 is true:
+    if (window.devSuperP1) {
+        var DEV_PLAYER_SPEED = 900;
+        var DEV_JUMP_VELOCITY = -1600;
+        var DEV_PLAYER_ACCEL = 300;
+        var DEV_PLAYER_MAX_SPEED = 2200;
+        var DEV_PLAYER_SUPER_MAX_SPEED = 4000;
+        var DEV_BHOP_BOOST = 1200;
+        var DEV_MOMENTUM_BOOST = 600;
+        var DEV_WALL_JUMP_X = 3200;
+        var DEV_WALL_JUMP_Y = -1800;
     }
 }
 
