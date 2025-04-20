@@ -1630,15 +1630,15 @@ function update(time, delta) {
 
     // In update(), override Player 1's movement constants if window.devSuperP1 is true:
     if (window.devSuperP1) {
-        var DEV_PLAYER_SPEED = 3000;
-        var DEV_JUMP_VELOCITY = -4200;
-        var DEV_PLAYER_ACCEL = 1200;
-        var DEV_PLAYER_MAX_SPEED = 8000;
-        var DEV_PLAYER_SUPER_MAX_SPEED = 16000;
-        var DEV_BHOP_BOOST = 4000;
-        var DEV_MOMENTUM_BOOST = 2000;
-        var DEV_WALL_JUMP_X = 9000;
-        var DEV_WALL_JUMP_Y = -4200;
+        var DEV_PLAYER_SPEED = 12000;
+        var DEV_JUMP_VELOCITY = -18000;
+        var DEV_PLAYER_ACCEL = 6000;
+        var DEV_PLAYER_MAX_SPEED = 40000;
+        var DEV_PLAYER_SUPER_MAX_SPEED = 80000;
+        var DEV_BHOP_BOOST = 20000;
+        var DEV_MOMENTUM_BOOST = 10000;
+        var DEV_WALL_JUMP_X = 40000;
+        var DEV_WALL_JUMP_Y = -18000;
     }
 }
 
