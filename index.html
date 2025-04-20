@@ -15,28 +15,30 @@
     <h1>move 'n shoot</h1>
     <div class="menu-container">
       <div class="controls">
-        <div>
-          <h2 style="color:#ff4444;">Player 1</h2>
-          <ul>
-            <li>Move: W A S D</li>
-            <li>Jump: W</li>
-            <li>Slide: Shift</li>
-            <li>Secret Boost: Q + W</li>
-            <li>Shoot: E</li>
-          </ul>
+        <div class="player-controls">
+          <div class="player-header" style="color:#ff4444;">Player 1</div>
+          <div class="control-row"><span class="control-label">Move:</span> <span class="control-key">W A S D</span></div>
+          <div class="control-row"><span class="control-label">Jump:</span> <span class="control-key">W</span></div>
+          <div class="control-row"><span class="control-label">Slide:</span> <span class="control-key">Shift</span></div>
+          <div class="control-row"><span class="control-label">Shoot:</span> <span class="control-key">E</span></div>
         </div>
-        <div>
-          <h2 style="color:#4444ff;">Player 2</h2>
-          <ul>
-            <li>Move: Arrow Keys</li>
-            <li>Jump: Up Arrow</li>
-            <li>Slide: Right Shift</li>
-            <li>Secret Boost: / + Up Arrow</li>
-            <li>Shoot: Mouse</li>
-          </ul>
+        <div class="player-controls">
+          <div class="player-header" style="color:#4444ff;">Player 2</div>
+          <div class="control-row"><span class="control-label">Move:</span> <span class="control-key">Arrow Keys</span></div>
+          <div class="control-row"><span class="control-label">Jump:</span> <span class="control-key">Up Arrow</span></div>
+          <div class="control-row"><span class="control-label">Slide:</span> <span class="control-key">Right Shift</span></div>
+          <div class="control-row"><span class="control-label">Shoot:</span> <span class="control-key">. (period)</span></div>
         </div>
       </div>
-      <button id="start-btn">Start Game</button>
+      <div class="menu-actions">
+        <div class="dash-hint">Jump twice sideways in air to dash</div>
+        <div class="mode-buttons">
+          <button id="pvp-btn">PvP</button>
+          <button id="pve-btn">PvE</button>
+        </div>
+        <button id="start-btn">Start Game</button>
+        <input id="secret-code" type="text" placeholder="Enter code..." style="margin-top:1em; font-size:1em; padding:0.3em 1em; border-radius:8px; border:1px solid #888; text-align:center;" />
+      </div>
     </div>
   </div>
   <script src="https://cdn.jsdelivr.net/npm/phaser@3.60.0/dist/phaser.js"></script>
