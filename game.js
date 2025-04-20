@@ -810,6 +810,9 @@ function update(time, delta) {
     let p1vx = player1.body.velocity.x;
     let p1vy = player1.body.velocity.y;
 
+    // --- Enhanced mid-air control ---
+    let p1Accel = p1OnGround ? PLAYER_ACCEL : PLAYER_ACCEL * 1.7; // 70% more in air
+
     // Track last wall touch for coyote time
     if ((p1TouchingLeft || p1TouchingRight) && !p1OnGround) {
         p1LastWallTime = time;
@@ -891,11 +894,11 @@ function update(time, delta) {
     if (!p1WallJumped) {
         if (keyA.isDown) {
             p1LastDir = -1;
-            player1.setVelocityX(Math.max(p1vx - p1_ACCEL, -p1MaxSpeed));
+            player1.setVelocityX(Math.max(p1vx - p1Accel, -p1MaxSpeed));
             player1.flipX = true;
         } else if (keyD.isDown) {
             p1LastDir = 1;
-            player1.setVelocityX(Math.min(p1vx + p1_ACCEL, p1MaxSpeed));
+            player1.setVelocityX(Math.min(p1vx + p1Accel, p1MaxSpeed));
             player1.flipX = false;
         } else if (!player1.bhopping) {
             // Friction (unless bhopping)
@@ -1232,6 +1235,8 @@ function update(time, delta) {
         let p2vx = player2.body.velocity.x;
         let p2vy = player2.body.velocity.y;
 
+        let p2Accel = p2OnGround ? PLAYER_ACCEL : PLAYER_ACCEL * 1.7;
+
         if ((p2TouchingLeft || p2TouchingRight) && !p2OnGround) {
             p2LastWallTime = time;
         }
@@ -1308,11 +1313,11 @@ function update(time, delta) {
         if (!p2WallJumped) {
             if (cursors.left.isDown) {
                 p2LastDir = -1;
-                player2.setVelocityX(Math.max(p2vx - PLAYER_ACCEL, -p2MaxSpeed));
+                player2.setVelocityX(Math.max(p2vx - p2Accel, -p2MaxSpeed));
                 player2.flipX = true;
             } else if (cursors.right.isDown) {
                 p2LastDir = 1;
-                player2.setVelocityX(Math.min(p2vx + PLAYER_ACCEL, p2MaxSpeed));
+                player2.setVelocityX(Math.min(p2vx + p2Accel, p2MaxSpeed));
                 player2.flipX = false;
             } else if (!player2.bhopping) {
                 if (p2vx > 0) {
