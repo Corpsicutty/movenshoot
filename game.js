@@ -128,9 +128,6 @@ let aiStateTimer = 0;
 let aiPatrolDir = 1;
 let aiPrevState = 'idle';
 
-let p1LastUpTap = 0, p1LastDownTap = 0;
-let p2LastUpTap = 0, p2LastDownTap = 0;
-
 const game = new Phaser.Game(config);
 
 function preload() {}
@@ -1001,7 +998,7 @@ function update(time, delta) {
                 bullet.setVelocityX(Math.cos(angle) * 1200);
                 bullet.setVelocityY(Math.sin(angle) * 1200);
                 bullet.setTint(0xff0000);
-                bullet.lifespan = 3000; // Increased range
+                bullet.lifespan = 3000; // Increased sniper range
                 bullet.body.allowGravity = false;
                 bullet.ricochetCount = 0;
                 bullet.body.bounce.x = 1;
@@ -1013,7 +1010,7 @@ function update(time, delta) {
         }
     }
 
-    // --- PLAYER 1 IN-AIR BLINK (A/D/W/S double-tap) ---
+    // --- PLAYER 1 IN-AIR BLINK (A/D double-tap) ---
     if (!p1OnGround) {
         if (Phaser.Input.Keyboard.JustDown(keyA)) {
             if (time - p1LastLeftTap < AIR_DASH_WINDOW && p1DashCooldown <= 0) {
@@ -1028,28 +1025,6 @@ function update(time, delta) {
                 p1DashCooldown = AIR_DASH_COOLDOWN;
             }
             p1LastRightTap = time;
-        }
-        // Dash up (W double-tap)
-        if (Phaser.Input.Keyboard.JustDown(keyW)) {
-            if (time - p1LastUpTap < AIR_DASH_WINDOW && p1DashCooldown <= 0) {
-                // Dash up
-                player1.y -= AIR_DASH_VELOCITY * 0.25; // Move up instantly
-                player1.setVelocityY(-AIR_DASH_VELOCITY);
-                if (typeof dashEmitter !== 'undefined') dashEmitter.emitParticleAt(player1.x, player1.y, 18);
-                p1DashCooldown = AIR_DASH_COOLDOWN;
-            }
-            p1LastUpTap = time;
-        }
-        // Dash down (S double-tap)
-        if (Phaser.Input.Keyboard.JustDown(keyS)) {
-            if (time - p1LastDownTap < AIR_DASH_WINDOW && p1DashCooldown <= 0) {
-                // Dash down
-                player1.y += AIR_DASH_VELOCITY * 0.25; // Move down instantly
-                player1.setVelocityY(AIR_DASH_VELOCITY);
-                if (typeof dashEmitter !== 'undefined') dashEmitter.emitParticleAt(player1.x, player1.y, 18);
-                p1DashCooldown = AIR_DASH_COOLDOWN;
-            }
-            p1LastDownTap = time;
         }
     }
 
@@ -1436,7 +1411,7 @@ function update(time, delta) {
                     bullet.setVelocityX(Math.cos(angle) * 1200);
                     bullet.setVelocityY(Math.sin(angle) * 1200);
                     bullet.setTint(0xff0000);
-                    bullet.lifespan = 3000; // Increased range
+                    bullet.lifespan = 3000; // Increased sniper range
                     bullet.body.allowGravity = false;
                     bullet.ricochetCount = 0;
                     bullet.body.bounce.x = 1;
@@ -1447,44 +1422,6 @@ function update(time, delta) {
                 }
             }
             this.input.activePointer.wasDown = this.input.activePointer.isDown;
-        }
-    }
-
-    // --- PLAYER 2 IN-AIR BLINK (Left/Right/Up/Down double-tap) ---
-    if (!p2OnGround) {
-        if (Phaser.Input.Keyboard.JustDown(cursors.left)) {
-            if (time - p2LastLeftTap < AIR_DASH_WINDOW && p2DashCooldown <= 0) {
-                blinkPlayer(player2, -1, this);
-                p2DashCooldown = AIR_DASH_COOLDOWN;
-            }
-            p2LastLeftTap = time;
-        }
-        if (Phaser.Input.Keyboard.JustDown(cursors.right)) {
-            if (time - p2LastRightTap < AIR_DASH_WINDOW && p2DashCooldown <= 0) {
-                blinkPlayer(player2, 1, this);
-                p2DashCooldown = AIR_DASH_COOLDOWN;
-            }
-            p2LastRightTap = time;
-        }
-        // Dash up (Up Arrow double-tap)
-        if (Phaser.Input.Keyboard.JustDown(cursors.up)) {
-            if (time - p2LastUpTap < AIR_DASH_WINDOW && p2DashCooldown <= 0) {
-                player2.y -= AIR_DASH_VELOCITY * 0.25;
-                player2.setVelocityY(-AIR_DASH_VELOCITY);
-                if (typeof dashEmitter !== 'undefined') dashEmitter.emitParticleAt(player2.x, player2.y, 18);
-                p2DashCooldown = AIR_DASH_COOLDOWN;
-            }
-            p2LastUpTap = time;
-        }
-        // Dash down (Down Arrow double-tap)
-        if (Phaser.Input.Keyboard.JustDown(cursors.down)) {
-            if (time - p2LastDownTap < AIR_DASH_WINDOW && p2DashCooldown <= 0) {
-                player2.y += AIR_DASH_VELOCITY * 0.25;
-                player2.setVelocityY(AIR_DASH_VELOCITY);
-                if (typeof dashEmitter !== 'undefined') dashEmitter.emitParticleAt(player2.x, player2.y, 18);
-                p2DashCooldown = AIR_DASH_COOLDOWN;
-            }
-            p2LastDownTap = time;
         }
     }
 
