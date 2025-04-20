@@ -961,14 +961,15 @@ function update(time, delta) {
                 p1LastShoot = now;
             }
         } else if (p1GunType === 'shotgun') {
-            // Shotgun: semi-auto, 6 pellets per shot
+            // Shotgun: semi-auto, 3 pellets per shot
             if (Phaser.Input.Keyboard.JustDown(keyE) && now - p1LastShoot > fireDelay) {
                 let angle = p1GunSprite.rotation;
-                for (let i = 0; i < 6; i++) {
+                for (let i = 0; i < 3; i++) {
                     let spread = Phaser.Math.FloatBetween(-0.18, 0.18); // ~10 degrees
                     let pelletAngle = angle + spread;
-                    let tipX = p1GunSprite.x + Math.cos(pelletAngle) * 22;
-                    let tipY = p1GunSprite.y + Math.sin(pelletAngle) * 8;
+                    // Spawn pellets just in front of the player (self-hits possible)
+                    let tipX = player1.x + Math.cos(pelletAngle) * 18;
+                    let tipY = player1.y + Math.sin(pelletAngle) * 8;
                     let bullet = bullets.create(tipX, tipY, null);
                     bullet.body.setSize(16, 8);
                     bullet.setDisplaySize(16, 8);
@@ -1373,14 +1374,15 @@ function update(time, delta) {
                     p2LastShoot = now;
                 }
             } else if (p2GunType === 'shotgun') {
-                // Shotgun: semi-auto, 6 pellets per shot
+                // Shotgun: semi-auto, 3 pellets per shot
                 if (Phaser.Input.Keyboard.JustDown(keyPeriod) && now - p2LastShoot > fireDelay) {
                     let angle = p2GunSprite.rotation;
-                    for (let i = 0; i < 6; i++) {
+                    for (let i = 0; i < 3; i++) {
                         let spread = Phaser.Math.FloatBetween(-0.18, 0.18); // ~10 degrees
                         let pelletAngle = angle + spread;
-                        let tipX = p2GunSprite.x + Math.cos(pelletAngle) * 22;
-                        let tipY = p2GunSprite.y + Math.sin(pelletAngle) * 8;
+                        // Spawn pellets just in front of the player (self-hits possible)
+                        let tipX = player2.x + Math.cos(pelletAngle) * 18;
+                        let tipY = player2.y + Math.sin(pelletAngle) * 8;
                         let bullet = bullets.create(tipX, tipY, null);
                         bullet.body.setSize(16, 8);
                         bullet.setDisplaySize(16, 8);
