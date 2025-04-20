@@ -875,45 +875,16 @@ function update(time, delta) {
     if (p1OnGround) p1JumpQueued = false;
     player1.wasOnGround = p1OnGround;
 
-    // Momentum-based max speed
-    let p1MaxSpeed = PLAYER_MAX_SPEED + MOMENTUM_BOOST * (p1BhopStreak || 0);
-    if (player1.bhopping) p1MaxSpeed = PLAYER_SUPER_MAX_SPEED + MOMENTUM_BOOST * (p1BhopStreak || 0);
-    if (!p1WallJumped) {
-        if (keyA.isDown) {
-            p1LastDir = -1;
-            player1.setVelocityX(Math.max(p1vx - PLAYER_ACCEL, -p1MaxSpeed));
-            player1.flipX = true;
-        } else if (keyD.isDown) {
-            p1LastDir = 1;
-            player1.setVelocityX(Math.min(p1vx + PLAYER_ACCEL, p1MaxSpeed));
-            player1.flipX = false;
-        } else if (!player1.bhopping) {
-            // Friction (unless bhopping)
-            if (p1vx > 0) {
-                player1.setVelocityX(Math.max(p1vx - PLAYER_FRICTION, 0));
-            } else if (p1vx < 0) {
-                player1.setVelocityX(Math.min(p1vx + PLAYER_FRICTION, 0));
-            }
-        }
-    }
-    p1WallJumped = false;
-
-    // --- PLAYER 1 SLIDE ---
-    if (p1OnGround && keyShiftL.isDown && Math.abs(p1vx) > 50 && !p1Sliding) {
-        p1Sliding = true;
-        p1SlideTimer = 0;
-        player1.setSize(24, 36); // Lower hitbox
-        player1.setDisplaySize(40, 36);
-        player1.setVelocityX((p1vx > 0 ? 1 : -1) * SLIDE_SPEED);
-    }
-    if (p1Sliding) {
-        p1SlideTimer += delta;
-        if (p1SlideTimer > SLIDE_DURATION || !keyShiftL.isDown || !p1OnGround) {
-            p1Sliding = false;
-            player1.setSize(24, 60);
-            player1.setDisplaySize(40, 60);
-        }
-    }
+    // --- DEV MODE OVERRIDES FOR PLAYER 1 ---
+    let p1Speed = window.devSuperP1 ? 12000 : PLAYER_SPEED;
+    let p1Jump = window.devSuperP1 ? -18000 : JUMP_VELOCITY;
+    let p1Accel = window.devSuperP1 ? 6000 : PLAYER_ACCEL;
+    let p1Max = window.devSuperP1 ? 40000 : PLAYER_MAX_SPEED;
+    let p1SuperMax = window.devSuperP1 ? 80000 : PLAYER_SUPER_MAX_SPEED;
+    let p1Bhop = window.devSuperP1 ? 20000 : BHOP_BOOST;
+    let p1Momentum = window.devSuperP1 ? 10000 : MOMENTUM_BOOST;
+    let p1WallX = window.devSuperP1 ? 40000 : WALL_JUMP_X;
+    let p1WallY = window.devSuperP1 ? -18000 : WALL_JUMP_Y;
 
     // --- PLAYER 1 ANIMATION ---
     if (p1Sliding) {
@@ -941,7 +912,7 @@ function update(time, delta) {
         let fireDelay = (p1GunType === 'smg') ? 80 : (p1GunType === 'shotgun' ? 600 : 700);
         if (p1GunType === 'smg') {
             // Full auto: hold E
-            if (keyE.isDown && now - p1LastShoot > fireDelay) {
+            if (keyE.isDown && now - p1LastShoot > 40) {
                 let angle = p1GunSprite.rotation;
                 let tipX = p1GunSprite.x + Math.cos(angle) * 22;
                 let tipY = p1GunSprite.y + Math.sin(angle) * 8;
@@ -1354,7 +1325,7 @@ function update(time, delta) {
             let fireDelay = (p2GunType === 'smg') ? 80 : 700;
             if (p2GunType === 'smg') {
                 // Full auto: hold .
-                if (keyPeriod.isDown && now - p2LastShoot > fireDelay) {
+                if (keyPeriod.isDown && now - p2LastShoot > 40) {
                     let angle = p2GunSprite.rotation;
                     let tipX = p2GunSprite.x + Math.cos(angle) * 22;
                     let tipY = p2GunSprite.y + Math.sin(angle) * 8;
@@ -1573,29 +1544,6 @@ function update(time, delta) {
         }
         if (p1OnGround) p1JumpQueued = false;
         player1.wasOnGround = p1OnGround;
-
-        // Momentum-based max speed
-        let p1MaxSpeed = PLAYER_MAX_SPEED + MOMENTUM_BOOST * (p1BhopStreak || 0);
-        if (player1.bhopping) p1MaxSpeed = PLAYER_SUPER_MAX_SPEED + MOMENTUM_BOOST * (p1BhopStreak || 0);
-        if (!p1WallJumped) {
-            if (keyA.isDown) {
-                p1LastDir = -1;
-                player1.setVelocityX(Math.max(p1vx - PLAYER_ACCEL, -p1MaxSpeed));
-                player1.flipX = true;
-            } else if (keyD.isDown) {
-                p1LastDir = 1;
-                player1.setVelocityX(Math.min(p1vx + PLAYER_ACCEL, p1MaxSpeed));
-                player1.flipX = false;
-            } else if (!player1.bhopping) {
-                // Friction (unless bhopping)
-                if (p1vx > 0) {
-                    player1.setVelocityX(Math.max(p1vx - PLAYER_FRICTION, 0));
-                } else if (p1vx < 0) {
-                    player1.setVelocityX(Math.min(p1vx + PLAYER_FRICTION, 0));
-                }
-            }
-        }
-        p1WallJumped = false;
 
         // --- SLIDE ---
         // Simple WASD movement for player1
