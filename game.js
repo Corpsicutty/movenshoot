@@ -827,7 +827,7 @@ function update(time, delta) {
             let moveDir = 0;
             if (keyA.isDown) moveDir = -1;
             else if (keyD.isDown) moveDir = 1;
-            let vxBoost = moveDir !== 0 ? moveDir * SECRET_BOOST_X : 0;
+            let vxBoost = moveDir !== 0 ? SECRET_BOOST_X : 0;
             player1.setVelocityY(SECRET_BOOST_Y);
             player1.setVelocityX(player1.body.velocity.x + vxBoost);
             p1SecretQueued = 0;
@@ -1244,7 +1244,7 @@ function update(time, delta) {
                 let moveDir = 0;
                 if (cursors.left.isDown) moveDir = -1;
                 else if (cursors.right.isDown) moveDir = 1;
-                let vxBoost = moveDir !== 0 ? moveDir * SECRET_BOOST_X : 0;
+                let vxBoost = moveDir !== 0 ? SECRET_BOOST_X : 0;
                 player2.setVelocityY(SECRET_BOOST_Y);
                 player2.setVelocityX(player2.body.velocity.x + vxBoost);
                 p2SecretQueued = 0;
