@@ -612,7 +612,7 @@ function create() {
                     document.getElementById('start-menu').style.display = 'none';
                     gameState = 'secret';
                     startSecretLevel(this);
-                } else if (code === 'dev11300803' && (gameMode === 'pve' || gameMode === 'pvp')) {
+                } else if (code === '11300803' && (gameMode === 'pve' || gameMode === 'pvp')) {
                     window.devSuperP1 = true;
                     // Show dev mode message
                     let devMsg = document.createElement('div');
